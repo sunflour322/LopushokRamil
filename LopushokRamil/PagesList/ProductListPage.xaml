@@ -19,13 +19,14 @@
             <ColumnDefinition/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+        <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal">
                 <TextBox Width="200" x:Name="SearchTb" TextChanged="SearchTb_TextChanged"/>
+                <ComboBox Margin="20 0 0 0" Width="100" x:Name=""></ComboBox>
             </StackPanel>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
-            <ListView Height="150" Width="500" x:Name="ProductLv" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductLv_SelectionChanged">
+        <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3">
+            <ListView Height="250" Width="500" x:Name="ProductLv" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductLv_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -43,16 +44,15 @@
                             <StackPanel Margin="20 0 0 0" Orientation="Vertical" Grid.Column="1">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="{Binding TypeProduct.Name}"/>
-                                    <TextBlock Text="|"/>
+                                    <TextBlock Text="  |  "/>
                                     <TextBlock Text="{Binding Name}"/>
                                 </StackPanel>
                                 <TextBlock Text="{Binding Article}"/>
                                 <StackPanel Orientation="Horizontal">
-                                    <!--<TextBlock Text="{Binding Materials.Name}" Width="700" TextWrapping="Wrap" Height="30"/>-->
                                     <ItemsControl ItemsSource="{Binding ProductMaterial}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <TextBlock Text="{Binding Material.Name}" Margin="0,0,5,0"/>
+                                                <TextBlock Text="{Binding Material.Name}" Margin="0,0,5,0" Width="70" TextWrapping="Wrap"/>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>
                                         <ItemsControl.ItemsPanel>
@@ -73,8 +73,10 @@
                 </ListView.ItemTemplate>
             </ListView>
         </StackPanel>
-        <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Right">
-            <TextBox x:Name="PageTb" Height="20"  Width="40" Margin="0 20 0 0" TextChanged="PageTb_TextChanged"/>
+        <StackPanel Grid.Column="1" Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Bottom" Margin="10" HorizontalAlignment="Right">
+            <TextBlock><Hyperlink Click="LeftClick">&lt;</Hyperlink></TextBlock>
+            <TextBlock x:Name="pageNumberTb"></TextBlock>
+            <TextBlock><Hyperlink Click="RightClick">&gt;</Hyperlink></TextBlock>
         </StackPanel>
     </Grid>
 </Page>
