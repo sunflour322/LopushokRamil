@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LopushokRamil.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,10 +28,13 @@ namespace LopushokRamil.PagesList
         {
             InitializeComponent();
             pageNumberTb.Text = pageNumber.ToString();
-            ProductLv.ItemsSource = App.db.Product
-               .Include("ProductMaterial.Material").OrderBy(x => x.ID).Skip(result).Take(20)// Загружаем связанные материалы
-               .ToList();
-             if(App.db.Product.Count() % 20 == 0)
+            var type = App.db.TypeProduct.ToList();
+            type.Insert(0, new DB.TypeProduct() { ID = 0, Name = "Все" });
+            TypeCb.ItemsSource = type.ToList();
+            TypeCb.DisplayMemberPath = "Name";
+            Sort();
+            TypeCb.SelectedIndex = 0;
+            if (App.db.Product.Count() % 20 == 0)
              {
                 countPages = App.db.Product.Count() / 20;
              }
@@ -38,14 +42,13 @@ namespace LopushokRamil.PagesList
             {
                 countPages = App.db.Product.Count() / 20 + 1;
             }
-                
+            
         }
 
         private void SearchTb_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ProductLv.ItemsSource = App.db.Product.Include("ProductMaterial.Material").OrderBy(x => x.ID).Skip(result).Take(20).Where(i =>
-               i.Name.StartsWith(SearchTb.Text))// Загружаем связанные материалы
-               .ToList();
+            Sort();
+
         }
         private void LeftClick(object sender, RoutedEventArgs e)
         {
@@ -58,9 +61,7 @@ namespace LopushokRamil.PagesList
             }
             pageNumberTb.Text = pageNumber.ToString();
             result -= 20;
-            ProductLv.ItemsSource = App.db.Product
-              .Include("ProductMaterial.Material").OrderBy(x => x.ID).Skip(result).Take(20)// Загружаем связанные материалы
-              .ToList();
+            Sort();
         }
         private void RightClick(object sender, RoutedEventArgs e)
         {
@@ -73,16 +74,39 @@ namespace LopushokRamil.PagesList
             }
             pageNumberTb.Text = pageNumber.ToString();
             result += 20;
-            ProductLv.ItemsSource = App.db.Product
-              .Include("ProductMaterial.Material").OrderBy(x => x.ID).Skip(result).Take(20)// Загружаем связанные материалы
-              .ToList();
+            Sort();
         }
 
         private void ProductLv_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
         }
+        public void Sort()
+        {
 
-        
+            var prod = App.db.Product.Include("ProductMaterial.Material").OrderBy(x => x.ID).Skip(result).Take(20).Where(i =>
+               i.Name.StartsWith(SearchTb.Text))
+               .ToList();
+            if (TypeCb.SelectedIndex != 0)
+            {
+                prod = prod.Where(i => i.ID_type == TypeCb.SelectedIndex).ToList();
+            }
+            ProductLv.ItemsSource = new List<Product>(prod);
+        }
+
+        private void TypeCb_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Sort();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+                
+        }
     }
 }
