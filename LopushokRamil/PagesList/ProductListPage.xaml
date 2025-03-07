@@ -21,9 +21,14 @@
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal">
-                <TextBox Width="200" x:Name="SearchTb" TextChanged="SearchTb_TextChanged"/>
-                <ComboBox Margin="20 0 0 0" Width="100" x:Name="TypeCb" SelectionChanged="TypeCb_SelectionChanged"></ComboBox>
-                <Button Margin="20 0 0 0" Content="Удалить" Click="DeleteBtn_Click"/>
+                <TextBox Width="200" Height="20" x:Name="SearchTb" TextChanged="SearchTb_TextChanged"/>
+                <ComboBox Margin="20 0 0 0" Width="100" Height="20" x:Name="TypeCb" SelectionChanged="TypeCb_SelectionChanged"></ComboBox>
+                <StackPanel>
+
+
+                    <Button Margin="20 0 0 0" Content="Удалить" Click="DeleteBtn_Click"/>
+                    <Button Margin="20 20 0 0" Content="Добавить" Click="AddBtn_Click"/>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3">

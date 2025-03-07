@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using LopushokRamil.Windows;
 
 namespace LopushokRamil.PagesList
 {
@@ -21,13 +22,14 @@ namespace LopushokRamil.PagesList
     /// </summary>
     public partial class ProductListPage : Page
     {
-        public int pageNumber = 1;
-        public int countPages = 0;
-        public int result;
+        private int _pageNumber = 1;
+        private int _countPages = 0;
+        private int _result;
+        private Product _product;
         public ProductListPage()
         {
             InitializeComponent();
-            pageNumberTb.Text = pageNumber.ToString();
+            pageNumberTb.Text = _pageNumber.ToString();
             var type = App.db.TypeProduct.ToList();
             type.Insert(0, new DB.TypeProduct() { ID = 0, Name = "Все" });
             TypeCb.ItemsSource = type.ToList();
@@ -36,11 +38,11 @@ namespace LopushokRamil.PagesList
             TypeCb.SelectedIndex = 0;
             if (App.db.Product.Count() % 20 == 0)
              {
-                countPages = App.db.Product.Count() / 20;
+                _countPages = App.db.Product.Count() / 20;
              }
             else
             {
-                countPages = App.db.Product.Count() / 20 + 1;
+                _countPages = App.db.Product.Count() / 20 + 1;
             }
             
         }
@@ -52,28 +54,28 @@ namespace LopushokRamil.PagesList
         }
         private void LeftClick(object sender, RoutedEventArgs e)
         {
-            pageNumber --;
-            if (pageNumber < 1)
+            _pageNumber --;
+            if (_pageNumber < 1)
             {
                 MessageBox.Show("Начало списка");
-                pageNumber ++;
+                _pageNumber ++;
                 return;
             }
-            pageNumberTb.Text = pageNumber.ToString();
-            result -= 20;
+            pageNumberTb.Text = _pageNumber.ToString();
+            _result -= 20;
             Sort();
         }
         private void RightClick(object sender, RoutedEventArgs e)
         {
-            pageNumber++;
-            if (pageNumber > countPages)
+            _pageNumber++;
+            if (_pageNumber > _countPages)
             {
                 MessageBox.Show("Конец списка");
-                pageNumber--;
+                _pageNumber--;
                 return;
             }
-            pageNumberTb.Text = pageNumber.ToString();
-            result += 20;
+            pageNumberTb.Text = _pageNumber.ToString();
+            _result += 20;
             Sort();
         }
 
@@ -84,8 +86,8 @@ namespace LopushokRamil.PagesList
         public void Sort()
         {
 
-            var prod = App.db.Product.Include("ProductMaterial.Material").OrderBy(x => x.ID).Skip(result).Take(20).Where(i =>
-               i.Name.StartsWith(SearchTb.Text))
+            var prod = App.db.Product.Include("ProductMaterial.Material").OrderBy(x => x.ID).Skip(_result).Take(20).Where(i =>
+               i.Name.StartsWith(SearchTb.Text) && i.IsActive == true)
                .ToList();
             if (TypeCb.SelectedIndex != 0)
             {
@@ -99,14 +101,18 @@ namespace LopushokRamil.PagesList
             Sort();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-                
+            _product = (Product)ProductLv.SelectedItem;
+            _product.IsActive = false;
+            App.db.SaveChanges();
+            Sort();
+        }
+
+        private void AddBtn_Click(object sender, RoutedEventArgs e)
+        {
+            AddOrEditProductWindow addOrEditProductWindow = new AddOrEditProductWindow();
+            addOrEditProductWindow.ShowDialog();
         }
     }
 }
