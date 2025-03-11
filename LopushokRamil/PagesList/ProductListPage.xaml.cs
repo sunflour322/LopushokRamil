@@ -37,14 +37,14 @@ namespace LopushokRamil.PagesList
             Sort();
             TypeCb.SelectedIndex = 0;
             if (App.db.Product.Count() % 20 == 0)
-             {
+            {
                 _countPages = App.db.Product.Count() / 20;
-             }
+            }
             else
             {
                 _countPages = App.db.Product.Count() / 20 + 1;
             }
-            
+
         }
 
         private void SearchTb_TextChanged(object sender, TextChangedEventArgs e)
@@ -54,11 +54,11 @@ namespace LopushokRamil.PagesList
         }
         private void LeftClick(object sender, RoutedEventArgs e)
         {
-            _pageNumber --;
+            _pageNumber--;
             if (_pageNumber < 1)
             {
                 MessageBox.Show("Начало списка");
-                _pageNumber ++;
+                _pageNumber++;
                 return;
             }
             pageNumberTb.Text = _pageNumber.ToString();
@@ -81,7 +81,9 @@ namespace LopushokRamil.PagesList
 
         private void ProductLv_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            var prod = ProductLv.SelectedItem as Product;
+            AddOrEditProductWindow addOrEditProductWindow = new AddOrEditProductWindow(prod);
+            addOrEditProductWindow.ShowDialog();
         }
         public void Sort()
         {
