@@ -8,7 +8,10 @@
         Title="AddOrEditProductWindow" Height="400" Width="500">
     <Grid Background="#d5edf5">
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center">
-
+            <StackPanel Margin="0 0 0 20" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock FontSize="20">Название</TextBlock>
+                <TextBox x:Name="NameTb" Margin="120 0 0 0" Width="100"></TextBox>
+            </StackPanel>
             <StackPanel Margin="0 0 0 20" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock FontSize="20">Артикль</TextBlock>
                 <TextBox x:Name="ArticleTb" Margin="130 0 0 0" Width="100"></TextBox>
@@ -30,7 +33,8 @@
                 <ComboBox x:Name="TypeCb" Margin="90 0 0 0" Width="100"></ComboBox>
             </StackPanel>
             <Button Click="AddOrEditBtn">Сохранить</Button>
-
+            
         </StackPanel>
+        <Button Width="50" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="CloseBtn" Margin="10">Закрыть</Button>
     </Grid>
 </Window>

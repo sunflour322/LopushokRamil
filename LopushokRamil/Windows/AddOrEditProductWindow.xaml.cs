@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LopushokRamil.DB;
+using LopushokRamil.PagesList;
 
 namespace LopushokRamil.Windows
 {
@@ -21,19 +22,24 @@ namespace LopushokRamil.Windows
     /// </summary>
     public partial class AddOrEditProductWindow : Window
     {
+        public event Action DataUpdated;
+
         private Product prod;
+
         public AddOrEditProductWindow()
         {
             InitializeComponent();
             TypeCb.ItemsSource = App.db.TypeProduct.ToList();
             TypeCb.DisplayMemberPath = "Name";
         }
+
         public AddOrEditProductWindow(Product product)
         {
             InitializeComponent();
             prod = product;
             TypeCb.ItemsSource = App.db.TypeProduct.ToList();
             TypeCb.DisplayMemberPath = "Name";
+            NameTb.Text = prod.Name;
             ArticleTb.Text = prod.Article.ToString();
             CostTb.Text = prod.MinCost.ToString();
             CountPeopleTb.Text = prod.PeopleCount.ToString();
@@ -47,6 +53,7 @@ namespace LopushokRamil.Windows
             {
                 if (prod != null)
                 {
+                    prod.Name = NameTb.Text;
                     prod.Article = int.Parse(ArticleTb.Text);
                     prod.MinCost = int.Parse(CostTb.Text);
                     prod.PeopleCount = int.Parse(CountPeopleTb.Text);
@@ -54,26 +61,35 @@ namespace LopushokRamil.Windows
                     prod.ID_type = TypeCb.SelectedIndex + 1;
                     App.db.SaveChanges();
                     MessageBox.Show("Успешное редактирование");
-                    Close();
                 }
                 else
                 {
                     Product product = new Product();
+                    product.Name = NameTb.Text;
                     product.Article = int.Parse(ArticleTb.Text);
                     product.MinCost = int.Parse(CostTb.Text);
                     product.PeopleCount = int.Parse(CountPeopleTb.Text);
                     product.ShopNumber = int.Parse(ShopNumberTb.Text);
                     product.ID_type = TypeCb.SelectedIndex + 1;
+                    product.IsActive = true;
+                    product.Image = "/ProductImages/picture.png";
                     App.db.Product.Add(product);
                     App.db.SaveChanges();
                     MessageBox.Show("Успешное добавление");
-                    Close();
                 }
+
+                DataUpdated?.Invoke(); 
+                Close();
             }
             catch (Exception)
             {
-                MessageBox.Show("Очибка");
+                MessageBox.Show("Ошибка");
             }
+        }
+
+        private void CloseBtn(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

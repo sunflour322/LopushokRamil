@@ -79,12 +79,7 @@ namespace LopushokRamil.PagesList
             Sort();
         }
 
-        private void ProductLv_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var prod = ProductLv.SelectedItem as Product;
-            AddOrEditProductWindow addOrEditProductWindow = new AddOrEditProductWindow(prod);
-            addOrEditProductWindow.ShowDialog();
-        }
+        
         public void Sort()
         {
 
@@ -105,16 +100,37 @@ namespace LopushokRamil.PagesList
 
         private void DeleteBtn_Click(object sender, RoutedEventArgs e)
         {
-            _product = (Product)ProductLv.SelectedItem;
-            _product.IsActive = false;
-            App.db.SaveChanges();
-            Sort();
+            try
+            {
+                _product = (Product)ProductLv.SelectedItem;
+                _product.IsActive = false;
+                App.db.SaveChanges();
+                Sort();
+                MessageBox.Show("Успешное удаление");
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Очибка");
+            }
+            
         }
 
         private void AddBtn_Click(object sender, RoutedEventArgs e)
         {
             AddOrEditProductWindow addOrEditProductWindow = new AddOrEditProductWindow();
+            addOrEditProductWindow.DataUpdated += Sort; 
             addOrEditProductWindow.ShowDialog();
+        }
+
+        private void ProductLv_SelectionChanged(object sender, MouseButtonEventArgs e)
+        {
+            var prod = ProductLv.SelectedItem as Product;
+            if (prod != null)
+            {
+                AddOrEditProductWindow addOrEditProductWindow = new AddOrEditProductWindow(prod);
+                addOrEditProductWindow.DataUpdated += Sort; 
+                addOrEditProductWindow.ShowDialog();
+            }
         }
     }
 }

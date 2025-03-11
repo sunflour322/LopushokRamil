@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProductListPage">
 
-    <Grid>
+    <Grid Background="#d5edf5">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -32,7 +32,7 @@
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3">
-            <ListView Height="250" Width="500" x:Name="ProductLv" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ProductLv_SelectionChanged">
+            <ListView Height="250" Width="500" x:Name="ProductLv" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick ="ProductLv_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
