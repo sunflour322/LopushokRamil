@@ -4,6 +4,117 @@
              xmlns:local="clr-namespace:LopushokRamil"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+       
+            <!-- Стиль для ComboBox -->
+            <Style x:Key="RoundedComboBoxStyle" TargetType="ComboBox">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ComboBox">
+                            <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                                <!-- Закругление углов -->
+                                <Grid>
+                                    <ToggleButton x:Name="toggleButton"
+                                          Grid.Column="2"
+                                          Focusable="false"
+                                          IsChecked="{Binding Path=IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                          ClickMode="Press">
+                                        <ToggleButton.Template>
+                                            <ControlTemplate TargetType="ToggleButton">
+                                                <Border x:Name="toggleButtonBorder"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                CornerRadius="0,10,10,0">
+                                                    <!-- Закругление справа -->
+                                                    <Path x:Name="arrow"
+                                                  HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center"
+                                                  Data="M0,0 L4,4 8,0 Z"
+                                                  Fill="Black"/>
+                                                </Border>
+                                            </ControlTemplate>
+                                        </ToggleButton.Template>
+                                    </ToggleButton>
+                                    <ContentPresenter x:Name="contentSite"
+                                              Margin="5,0,0,0"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Left"
+                                              IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"/>
+                                    <TextBox x:Name="PART_EditableTextBox"
+                                     Style="{x:Null}"
+                                     Margin="3,3,23,3"
+                                     Focusable="True"
+                                     Background="Transparent"
+                                     Visibility="Hidden"
+                                     IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                                    <Popup x:Name="PART_Popup"
+                                   AllowsTransparency="True"
+                                   Placement="Bottom"
+                                   Focusable="False"
+                                   IsOpen="{Binding Path=IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}}"
+                                   PopupAnimation="Slide">
+                                        <Border x:Name="dropDownBorder"
+                                        Background="White"
+                                        BorderBrush="Gray"
+                                        BorderThickness="1"
+                                        CornerRadius="10">
+                                            <!-- Закругление углов выпадающего списка -->
+                                            <ScrollViewer Margin="4,6,4,6">
+                                                <ItemsPresenter/>
+                                            </ScrollViewer>
+                                        </Border>
+                                    </Popup>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Background" Value="White"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="VerticalContentAlignment" Value="Center"/>
+            </Style>
+            <!-- Стиль для Button -->
+            <Style x:Key="RoundedButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="LightBlue"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="BorderBrush" Value="Gray"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="10,5"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="10">
+                                <!-- Закругление углов -->
+                                <ContentPresenter x:Name="contentPresenter"
+                                          HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"
+                                          TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="LightSkyBlue"/>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="DodgerBlue"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        
     </Application.Resources>
 </Application>

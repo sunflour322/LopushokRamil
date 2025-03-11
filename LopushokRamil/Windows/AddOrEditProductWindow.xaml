@@ -30,11 +30,11 @@
             </StackPanel>
             <StackPanel Margin="0 0 0 20" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock FontSize="20">Тип продукта</TextBlock>
-                <ComboBox x:Name="TypeCb" Margin="90 0 0 0" Width="100"></ComboBox>
+                <ComboBox x:Name="TypeCb" Style="{StaticResource RoundedComboBoxStyle}" Margin="90 0 0 0" Width="100"></ComboBox>
             </StackPanel>
-            <Button Click="AddOrEditBtn">Сохранить</Button>
+            <Button Click="AddOrEditBtn" Background="LightGray" Style="{StaticResource RoundedButtonStyle}">Сохранить</Button>
             
         </StackPanel>
-        <Button Width="50" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="CloseBtn" Margin="10">Закрыть</Button>
+        <Button Width="50" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="CloseBtn" Style="{StaticResource RoundedButtonStyle}" Margin="10" Background="LightGray">Закрыть</Button>
     </Grid>
 </Window>
