@@ -6,9 +6,8 @@
         xmlns:local="clr-namespace:LopushokRamil.Windows"
         mc:Ignorable="d"
         Title="AddOrEditProductWindow" Height="700" Width="500">
-    <Grid Background="#d5edf5">
+    <Grid Background="#FFFFFF">
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="10">
-            <!-- Поля для продукта -->
             <StackPanel Margin="0 0 0 20" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock FontSize="20">Название</TextBlock>
                 <TextBox x:Name="NameTb" Margin="120 0 0 0" Width="100"></TextBox>
@@ -31,17 +30,15 @@
             </StackPanel>
             <StackPanel Margin="0 0 0 20" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock FontSize="20">Тип продукта</TextBlock>
-                <ComboBox x:Name="TypeCb" Style="{StaticResource RoundedComboBoxStyle}" Margin="90 0 0 0" Width="100"></ComboBox>
+                <ComboBox Background="#00CC76" x:Name="TypeCb" Style="{StaticResource RoundedComboBoxStyle}" Margin="90 0 0 0" Width="100"></ComboBox>
             </StackPanel>
 
-            <!-- Таблица для материалов продукта -->
-            <DataGrid x:Name="MaterialsGrid" 
+            <DataGrid Background="#CEFFF9" x:Name="MaterialsGrid" 
           AutoGenerateColumns="False" 
           Margin="0 20 0 10" 
           Width="400" 
           Height="200"
           CanUserAddRows="False">
-                <!-- Отключаем пустую строку для добавления -->
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Материал" Binding="{Binding Material.Name}" IsReadOnly="True"/>
                     <DataGridTextColumn Header="Количество" Binding="{Binding Count}"/>
@@ -55,18 +52,15 @@
                 </DataGrid.Columns>
             </DataGrid>
 
-            <!-- Кнопки для добавления материала -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
-                <ComboBox x:Name="MaterialCb" Width="200" Margin="0 0 10 0" DisplayMemberPath="Name"/>
+                <ComboBox Background="#00CC76" Style="{StaticResource RoundedComboBoxStyle}" x:Name="MaterialCb" Width="200" Margin="0 0 10 0" DisplayMemberPath="Name"/>
                 <TextBox x:Name="MaterialCountTb" Width="100" Margin="0 0 10 0"/>
-                <Button Content="Добавить материал" Click="AddMaterial_Click" Style="{StaticResource RoundedButtonStyle}"/>
+                <Button Content="Добавить материал" Background="#00CC76" Click="AddMaterial_Click" Style="{StaticResource RoundedButtonStyle}"/>
             </StackPanel>
 
-            <!-- Кнопка сохранения -->
-            <Button Click="AddOrEditBtn" Background="LightGray" Style="{StaticResource RoundedButtonStyle}" Margin="0 20 0 0">Сохранить</Button>
+            <Button Click="AddOrEditBtn" Background="#00CC76" Style="{StaticResource RoundedButtonStyle}" Margin="0 20 0 0">Сохранить</Button>
         </StackPanel>
 
-        <!-- Кнопка закрытия -->
-        <Button Width="50" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="CloseBtn" Style="{StaticResource RoundedButtonStyle}" Margin="10" Background="LightGray">Закрыть</Button>
+        <Button Width="50" Height="50" VerticalAlignment="Bottom"  HorizontalAlignment="Right" Click="CloseBtn" Style="{StaticResource RoundedButtonStyle}" Margin="10" Background="#00CC76">Закрыть</Button>
     </Grid>
 </Window>

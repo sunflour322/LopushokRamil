@@ -51,7 +51,6 @@ namespace LopushokRamil.Windows
             ShopNumberTb.Text = prod.ShopNumber.ToString();
             TypeCb.SelectedIndex = (int)(prod.ID_type - 1);
 
-            // Загрузка материалов продукта
             productMaterials = App.db.ProductMaterial.Where(pm => pm.ID_prod == prod.ID).ToList();
             MaterialsGrid.ItemsSource = productMaterials;
         }
@@ -105,7 +104,6 @@ namespace LopushokRamil.Windows
             {
                 if (prod != null)
                 {
-                    // Обновление данных продукта
                     prod.Name = NameTb.Text;
                     prod.Article = int.Parse(ArticleTb.Text);
                     prod.MinCost = int.Parse(CostTb.Text);
@@ -113,12 +111,10 @@ namespace LopushokRamil.Windows
                     prod.ShopNumber = int.Parse(ShopNumberTb.Text);
                     prod.ID_type = TypeCb.SelectedIndex + 1;
 
-                    // Получаем текущие материалы продукта из базы данных
                     var existingMaterials = App.db.ProductMaterial
                         .Where(pm => pm.ID_prod == prod.ID)
                         .ToList();
 
-                    // Удаляем материалы, которые больше не нужны
                     foreach (var existingMaterial in existingMaterials)
                     {
                         if (!productMaterials.Any(pm => pm.ID_mat == existingMaterial.ID_mat))
@@ -127,7 +123,6 @@ namespace LopushokRamil.Windows
                         }
                     }
 
-                    // Добавляем или обновляем материалы
                     foreach (var pm in productMaterials)
                     {
                         var existingMaterial = existingMaterials
@@ -135,12 +130,10 @@ namespace LopushokRamil.Windows
 
                         if (existingMaterial != null)
                         {
-                            // Обновляем количество материала
                             existingMaterial.Count = pm.Count;
                         }
                         else
                         {
-                            // Добавляем новый материал
                             pm.ID_prod = prod.ID;
                             App.db.ProductMaterial.Add(pm);
                         }
@@ -148,7 +141,6 @@ namespace LopushokRamil.Windows
                 }
                 else
                 {
-                    // Создание нового продукта
                     Product product = new Product
                     {
                         Name = NameTb.Text,
@@ -163,7 +155,6 @@ namespace LopushokRamil.Windows
                     App.db.Product.Add(product);
                     App.db.SaveChanges();
 
-                    // Добавление материалов продукта
                     foreach (var pm in productMaterials)
                     {
                         pm.ID_prod = product.ID;
@@ -171,7 +162,6 @@ namespace LopushokRamil.Windows
                     }
                 }
 
-                // Сохранение изменений в базе данных
                 App.db.SaveChanges();
                 MessageBox.Show("Успешное сохранение");
                 DataUpdated?.Invoke();

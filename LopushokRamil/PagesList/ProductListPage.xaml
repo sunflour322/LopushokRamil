@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="ProductListPage">
 
-    <Grid Background="#d5edf5">
+    <Grid Background="#FFFFFF">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
@@ -22,17 +22,17 @@
         <StackPanel Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Left">
             <StackPanel Orientation="Horizontal">
                 <TextBox Width="200" Height="20" x:Name="SearchTb" TextChanged="SearchTb_TextChanged"/>
-                <ComboBox Style="{StaticResource RoundedComboBoxStyle}" Margin="20 0 0 0" Width="100" Height="20" x:Name="TypeCb" SelectionChanged="TypeCb_SelectionChanged"></ComboBox>
+                <ComboBox Background="#00CC76" Style="{StaticResource RoundedComboBoxStyle}" Margin="20 0 0 0" Width="100" Height="20" x:Name="TypeCb" SelectionChanged="TypeCb_SelectionChanged"></ComboBox>
                 <StackPanel>
 
 
-                    <Button Style="{StaticResource RoundedButtonStyle}" Margin="20 0 0 0" Background="LightGray"  Content="Удалить" Click="DeleteBtn_Click"/>
-                    <Button Style="{StaticResource RoundedButtonStyle}" Width="70" Background="LightGray" Margin="20 20 0 0" Content="Добавить" Click="AddBtn_Click"/>
+                    <Button Style="{StaticResource RoundedButtonStyle}" Margin="20 0 0 0" Background="#00CC76"  Content="Удалить" Click="DeleteBtn_Click"/>
+                    <Button Style="{StaticResource RoundedButtonStyle}" Width="70" Background="#00CC76" Margin="20 20 0 0" Content="Добавить" Click="AddBtn_Click"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Grid.RowSpan="2" Grid.ColumnSpan="3">
-            <ListView Height="250" Width="500" x:Name="ProductLv" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick ="ProductLv_SelectionChanged">
+            <ListView Background="#CEFFF9" Height="250" Width="500" x:Name="ProductLv" d:ItemsSource="{d:SampleData ItemCount=5}" MouseDoubleClick ="ProductLv_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid>
